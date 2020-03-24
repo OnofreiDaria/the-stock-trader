@@ -2,12 +2,12 @@
   <b-col sm="6" md="4" class="mt-5">
     <b-card
         header-tag="h4"
-        header-bg-variant="success"
-        text-variant="white"
+        header-bg-variant="warning"
+        text-variant="dark"
         style="max-width: 25rem;"
     >
       <template v-slot:header>{{ stock.name}}
-        <small>(Price: {{ stock.price }})</small>
+        <small>(Price: {{ stock.price }} | {{ stock.quantity }})</small>
       </template>
       <b-card-text>
         <b-row>
@@ -17,11 +17,11 @@
                           v-model="quantity"></b-form-input>
           </b-col>
           <b-col cols="3">
-            <b-button variant="success"
+            <b-button variant="warning"
                       class="float-right"
-                      @click="buyStock"
+                      @click="btnSellStock"
                       :disabled="quantity <= 0 || !Number.isInteger(+quantity)">
-              Buy</b-button>
+              Sell</b-button>
           </b-col>
         </b-row>
 
@@ -32,6 +32,8 @@
 </template>
 
 <script>
+  import { mapActions } from 'vuex'
+
   export default  {
     props: ['stock'],
     data() {
@@ -40,14 +42,18 @@
       }
     },
     methods: {
-      buyStock() {
+      ...mapActions([
+        'sellStock'
+      ]),
+      btnSellStock() {
         const order = {
           stockId: this.stock.id,
           stockPrice: this.stock.price,
           quantity: this.quantity
         };
-        this.$store.dispatch('buyStock', order);
+        this.sellStock(order);
         this.quantity = 0;
+
       }
     }
   }

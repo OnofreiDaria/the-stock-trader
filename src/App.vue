@@ -1,12 +1,10 @@
 <template>
   <div id="app">
     <app-header/>
-    <div class="row">
-      <div class="col-xs-12">
+    <b-container fluid>
         <router-view></router-view>
-      </div>
-    </div>
 
+    </b-container>
   </div>
 </template>
 
