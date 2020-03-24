@@ -12,6 +12,7 @@
         </b-navbar-nav>
 
         <!-- Right aligned nav items -->
+
         <b-navbar-nav class="ml-auto">
           <b-nav-item>End Day</b-nav-item>
           <b-nav-item-dropdown text="Save & Load" right>
@@ -20,7 +21,18 @@
           </b-nav-item-dropdown>
 
         </b-navbar-nav>
+        <b-nav-text class="font-weight-bold text-dark">Funds: {{ funds }}</b-nav-text>
       </b-collapse>
     </b-navbar>
   </div>
 </template>
+
+<script>
+  export default {
+    computed: {
+      funds() {
+        return this.$store.getters.funds;
+      }
+    }
+  }
+</script>
