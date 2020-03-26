@@ -20,8 +20,8 @@
             <b-button variant="warning"
                       class="float-right"
                       @click="btnSellStock"
-                      :disabled="quantity <= 0 || !Number.isInteger(+quantity)">
-              Sell</b-button>
+                      :disabled="insufficientQuantity || quantity <= 0 || !Number.isInteger(+quantity)">
+              {{ insufficientQuantity ? 'Not enough' : 'Sell'}}</b-button>
           </b-col>
         </b-row>
 
@@ -39,6 +39,11 @@
     data() {
       return {
         quantity: 0
+      }
+    },
+    computed: {
+      insufficientQuantity() {
+        return this.quantity > this.stock.quantity;
       }
     },
     methods: {
