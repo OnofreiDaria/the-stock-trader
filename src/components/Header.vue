@@ -16,8 +16,8 @@
         <b-navbar-nav class="ml-auto">
           <b-nav-item @click="endDay">End Day</b-nav-item>
           <b-nav-item-dropdown text="Save & Load" right>
-            <b-dropdown-item href="#">Save Data</b-dropdown-item>
-            <b-dropdown-item href="#">Load Data</b-dropdown-item>
+            <b-dropdown-item @click="saveData">Save Data</b-dropdown-item>
+            <b-dropdown-item @click="btnLoadData">Load Data</b-dropdown-item>
           </b-nav-item-dropdown>
 
         </b-navbar-nav>
@@ -29,6 +29,7 @@
 
 <script>
   import { mapActions } from 'vuex';
+
   export default {
     computed: {
       funds() {
@@ -37,10 +38,22 @@
     },
     methods: {
       ...mapActions([
-        'randomizeStocks'
+        'randomizeStocks',
+        'loadData'
       ]),
       endDay() {
         this.randomizeStocks();
+      },
+      saveData() {
+        const data = {
+          funds: this.$store.getters.funds,
+          stockPortfolio: this.$store.getters.stockPortfolio,
+          stocks: this.$store.getters.stocks
+        };
+        this.$http.put('data.json', data);
+      },
+      btnLoadData() {
+        this.loadData();
       }
     }
   }
